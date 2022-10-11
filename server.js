@@ -2,18 +2,24 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/user");
+const scoreRoutes = require("./routes/score");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
 // express app
 const app = express();
 const port = process.env.PORT || 4000;
 
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to express" });
 });
 
 app.use("/api/users", userRoutes);
+app.use("/api/scores", scoreRoutes);
 
 // connect to db
 mongoose
